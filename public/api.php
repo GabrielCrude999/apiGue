@@ -28,11 +28,18 @@ try {
     $html   = $gue->searchByName($name);
     $exists = $checker->nameExists($html);
 
+<<<<<<< HEAD
   echo json_encode([
     'exists'      => $exists,
     'suggestions' => $exists ? $suggester->suggest($name, []) : [] // <- array vazio
 ]);
 
+=======
+    echo json_encode([
+        'exists'       => $exists,
+        'suggestions'  => $exists ? $suggester->suggest($name, $area) : []
+    ]);
+>>>>>>> 7247bd5d16bc361dff6ac80555ed591a09c8ba5d
 
 } catch (Throwable $e) {
     http_response_code(500);

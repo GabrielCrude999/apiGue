@@ -4,6 +4,7 @@ final class NameAvailabilityService
 {
     public function nameExists(string $html): bool
     {
+<<<<<<< HEAD
         if (stripos($html, 'Nenhum registo encontrado') !== false) {
             return false;
         }
@@ -23,4 +24,15 @@ final class NameAvailabilityService
         }
         return array_unique($names);
     }
+=======
+        // Heurística simples (MVP!)
+        // O site do GUE mostra resultados numa tabela
+        if (stripos($html, 'Nenhum registo encontrado') !== false) {
+            return false;
+        }
+
+        // Se existir tabela ou resultados
+        return stripos($html, '<table') !== false;
+    }
+>>>>>>> 7247bd5d16bc361dff6ac80555ed591a09c8ba5d
 }
