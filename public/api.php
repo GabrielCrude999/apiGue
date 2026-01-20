@@ -1,18 +1,23 @@
 <?php
+// Retorna JSON
 header('Content-Type: application/json; charset=utf-8');
 
-require_once __DIR__.'/../src/Gue/GueClient.php';
-require_once __DIR__.'/../src/Name/NameAvailabilityService.php';
-require_once __DIR__.'/../src/Name/NameSuggestionService.php';
-
+// Permitir apenas POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['error' => 'Método não permitido']);
     exit;
 }
 
-$name = trim($_POST['name'] ?? '');
-$area = trim($_POST['area'] ?? '');
+// Importa classes
+require_once __DIR__ . '/../src/Gue/GueClient.php';
+require_once __DIR__ . '/../src/Name/NameAvailabilityService.php';
+require_once __DIR__ . '/../src/Name/NameSuggestionService.php';
+
+// Lê body JSON
+$input = json_decode(file_get_contents('php://input'), true);
+
+$name = trim($input['name'] ?? '');
 
 if ($name === '') {
     http_response_code(400);
@@ -25,21 +30,18 @@ try {
     $checker = new NameAvailabilityService();
     $suggester = new NameSuggestionService();
 
-    $html   = $gue->searchByName($name);
+    // Busca no GUE
+    $html = $gue->searchByName($name);
     $exists = $checker->nameExists($html);
 
-<<<<<<< HEAD
-  echo json_encode([
-    'exists'      => $exists,
-    'suggestions' => $exists ? $suggester->suggest($name, []) : [] // <- array vazio
-]);
+    // Se já existe, gera sugestões; se não, retorna vazio
+    $suggestions = $exists ? $suggester->suggest($name, []) : [];
 
-=======
+    // Retorno
     echo json_encode([
-        'exists'       => $exists,
-        'suggestions'  => $exists ? $suggester->suggest($name, $area) : []
+        'name' => $name,
+        'suggestions' => $suggestions
     ]);
->>>>>>> 7247bd5d16bc361dff6ac80555ed591a09c8ba5d
 
 } catch (Throwable $e) {
     http_response_code(500);

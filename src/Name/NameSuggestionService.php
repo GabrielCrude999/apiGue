@@ -3,7 +3,6 @@
 final class NameSuggestionService
 {
     private array $suffixes = [
-<<<<<<< HEAD
         'Serviços', 'Comercial', 'Grupo',
         'Tech', 'Digital', 'Logística', 'Express'
     ];
@@ -44,39 +43,10 @@ final class NameSuggestionService
             if (count($suggestions) >= $this->maxSuggestions) {
                 break;
             }
-=======
-        'geral' => ['Serviços', 'Comercial', 'Grupo', 'Soluções'],
-        'tecnologia' => ['Tech', 'Digital', 'Systems', 'Innovation', 'Labs', 'Solutions', 'Next'],
-        'construcao' => ['Construções', 'Engenharia', 'Obras', 'Projetos', 'Master'],
-        'transporte' => ['Logística', 'Transportes', 'Cargo', 'Express', 'Rápido'],
-    ];
-
-    private array $commonSuffixes = ['& Filhos', 'Associados', 'Group'];
-
-    public function suggest(string $baseName, string $area): array
-    {
-        $area = strtolower($area);
-        $options = $this->suffixes[$area] ?? $this->suffixes['geral'];
-
-        // Adiciona os sufixos universais
-        $options = array_merge($options, $this->commonSuffixes);
-
-        $suggestions = [];
-
-        // Apenas concatena baseName + sufixo (não permutar)
-        foreach ($options as $suffix) {
-            $suggestions[] = $baseName . ' ' . $suffix;
-        }
-
-        // Para a categoria geral, limita a 6 resultados
-        if ($area === 'geral') {
-            return array_slice($suggestions, 0, 6);
->>>>>>> 7247bd5d16bc361dff6ac80555ed591a09c8ba5d
         }
 
         return $suggestions;
     }
-<<<<<<< HEAD
 
     /**
      * Geração genérica de raízes (independente do nome)
@@ -169,6 +139,4 @@ final class NameSuggestionService
         similar_text($a, $b, $p);
         return $p / 100;
     }
-=======
->>>>>>> 7247bd5d16bc361dff6ac80555ed591a09c8ba5d
 }
