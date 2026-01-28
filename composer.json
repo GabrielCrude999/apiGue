@@ -1,0 +1,14 @@
+{
+  "name": "apiGue/api",
+  "description": "API para verificação de disponibilidade de nomes",
+  "require": {
+    "php": ">=8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Gue\\": "src/Gue/",
+      "Name\\": "src/Name/",
+      "Utils\\": "Utils/"
+    }
+  }
+}
