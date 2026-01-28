@@ -26,8 +26,22 @@ if ($method === 'GET') {
     exit;
 }
 
-// Validação
+// Validação - Se nenhum nome foi fornecido
 if ($name === '') {
+    // Se nenhum parâmetro foi enviado, retorna info da API
+    if (empty($_GET) && empty($_POST) && $method === 'GET') {
+        http_response_code(200);
+        echo json_encode([
+            'message' => 'API GUE - Verificador de Disponibilidade de Nomes',
+            'usage' => [
+                'GET' => '?name=exemplo',
+                'POST' => '{"name": "exemplo"}'
+            ],
+            'status' => 'online'
+        ]);
+        exit;
+    }
+    
     http_response_code(400);
     echo json_encode(['error' => 'Nome é obrigatório']);
     exit;
